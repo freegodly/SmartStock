@@ -2,7 +2,10 @@
 
 import tushare as ts
 import json
-
+from django.db import models
+from StockApp.models import *
+import time
+from datetime import *
 
 def getchartjson(request,code_str):
 	data = get_hist_data_list(code_str,start='2016-01-01',end='2016-07-01')
@@ -33,3 +36,19 @@ def splice_stock_data(data):
 	stock_date = [i[0] for i in data]
 	stock_value = [i[1:len(i)] for i in data]
 	return (stock_date,stock_value)
+
+
+
+def init_models():
+	orange_data =  ts.get_stock_basics()
+	StockBasicsList = []
+	for index,row in orange_data.iterrows():
+		entry = StockBasics(code=index,name=row.name,industry=row.industry\
+			,area=row.area,pe=row.pe,outstanding=row.outstanding,\
+			totals=row.totals,totalAssets=row.totalAssets,liquidAssets=row.liquidAssets\
+			,fixedAssets=row.fixedAssets,eps=0,\
+			reserved=row.reserved,reservedPerShare=row.reservedPerShare,\
+			bvps=row.bvps,pb=row.pb,timeToMarket= date.today() if row.timeToMarket==0 else datetime.strptime(str(row.timeToMarket),'%Y%m%d').date())
+        StockBasicsList.append(entry)
+        #entry.save()
+	StockBasics.objects.bulk_create(StockBasicsList)

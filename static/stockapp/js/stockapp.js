@@ -267,7 +267,8 @@ function getsetdayk(chart,url){
 			            symbolSize: 8,
 			            hoverAnimation: false,
 			            data: splitDataFromIndex(data0.values,4)
-			        }
+			          }
+
 			    ]
 			};
 

@@ -15,6 +15,7 @@ def stockchart(request,code_str=None):
 
 
 def getchartjson(request,code_str):
+
 	data = get_hist_data_list(code_str,start='2016-01-01',end='2016-07-01')
 	
 	k_data = dict(
@@ -25,4 +26,11 @@ def getchartjson(request,code_str):
 	
 	return HttpResponse( json.dumps(k_data),content_type="application/json")
 
+def initmodelsdata(request):
+	init_models();
+	k_data = dict(
+		result=True,
+		str='init_models'
+	)
+	return HttpResponse( json.dumps(k_data),content_type="application/json")
 

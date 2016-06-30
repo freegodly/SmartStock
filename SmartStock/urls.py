@@ -23,5 +23,6 @@ from StockApp import views as sav
 urlpatterns = [
 	url(r'^$', sav.stockchart),
     url(r'^stockchart/(\d+)/$', sav.stockchart),
+    url(r'^init/$', sav.initmodelsdata),
     url(r'^stockapp/getchartjson/(\d+)/$', sav.getchartjson),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
